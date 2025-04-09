@@ -4,6 +4,17 @@
 # include <iostream>
 # include "colors.hpp"
 
+enum converterDataType
+{
+	CHAR,
+	INT,
+	FLOAT,
+	DOUBLE,
+	PSF,
+	PSD,
+	INVALID
+};
+
 class ScalarConverter
 {
 private:
@@ -17,7 +28,7 @@ private:
 
 public:	
 
-	static void	convert(std::string input);
+	static void	convert(const std::string input);
 
 };
 
