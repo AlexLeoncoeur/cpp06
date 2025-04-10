@@ -2,7 +2,7 @@
 
 int	main(void)
 {
-	ScalarConverter::convert("-0.0f");
+	ScalarConverter::convert("42.0f");
 
 	return (0);
 }

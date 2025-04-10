@@ -86,7 +86,11 @@ static bool isDouble(const std::string input)
 
 converterDataType	getIndex(const std::string input)
 {
-	if (input.size() == 1 && std::isalpha(input[0]))
+	if (input == "-inf" || input == "+inf" || input == "nan")
+		return (PSD);
+	else if (input == "-inff" || input == "+inff" || input == "nanf")
+		return (PSF);
+	else if (input.size() == 1 && std::isalpha(input[0]))
 		return (CHAR);
 	else if (isInt(input))
 		return (INT);
@@ -113,7 +117,7 @@ void	ScalarConverter::convert(const std::string input)
 	}
 	case INT:
 	{
-		if (!isprint(static_cast<char>(std::atoi(input.c_str()))))
+		if (isprint(static_cast<char>(std::atoi(input.c_str()))))
 			std::cout	<< MAGENTA << "Char: '" << static_cast<char>(std::atoi(input.c_str())) << "'" <<  std::endl;
 		else
 			std::cout	<< MAGENTA << "Char: Non displayable" << std::endl;
@@ -125,36 +129,45 @@ void	ScalarConverter::convert(const std::string input)
 	}
 	case FLOAT:
 	{
-		if (!isprint(static_cast<char>(std::atof(input.c_str()))))
+		if (isprint(static_cast<char>(std::atof(input.c_str()))))
 			std::cout	<< MAGENTA << "Char: '" << static_cast<char>(std::atoi(input.c_str())) << "'" <<  std::endl;
 		else
 			std::cout	<< MAGENTA << "Char: Non displayable" << std::endl;
-		std::cout << MAGENTA << static_cast<int>(std::atof(input.c_str())) << std::endl;
-		std::cout << MAGENTA << input << std::endl;
-		std::cout << MAGENTA << input.substr(0, input.find("f")) << RESET << std::endl;
-		terminar flaot
+		std::cout << MAGENTA << "Int: " << static_cast<int>(std::atof(input.c_str())) << std::endl;
+		if (std::atof(input.c_str()) == static_cast<int>(std::atof(input.c_str())))
+		{
+			std::cout << MAGENTA << "Float: " << std::atof(input.c_str()) << ".0f" << RESET << std::endl;
+			std::cout << MAGENTA << "Double: " << static_cast<double>(std::atof(input.c_str())) << ".0" << RESET << std::endl;
+		}
+		else
+		{
+			std::cout << MAGENTA << "Float: " << std::atof(input.c_str()) << "f" << RESET << std::endl;
+			std::cout << MAGENTA << "Double: " << static_cast<double>(std::atof(input.c_str())) << RESET << std::endl;
+		}
 		break;
 	}
 	case DOUBLE:
+	{
+		if (isprint(static_cast<char>(std::atof(input.c_str()))))
+			std::cout	<< MAGENTA << "Char: '" << static_cast<char>(std::atoi(input.c_str())) << "'" <<  std::endl;
+		else
+			std::cout	<< MAGENTA << "Char: Non displayable" << std::endl;
+		std::cout << MAGENTA << "Int: " << static_cast<int>(std::atof(input.c_str())) << std::endl;
+		if (std::atof(input.c_str()) == static_cast<int>(std::atof(input.c_str())))
+		{
+			std::cout << MAGENTA << "Float: " << static_cast<float>(std::atof(input.c_str())) << ".0f" << RESET << std::endl;
+			std::cout << MAGENTA << "Double: " << std::atof(input.c_str()) << ".0" << RESET << std::endl;
+		}
+		else
+		{
+			std::cout << MAGENTA << "Float: " << static_cast<float>(std::atof(input.c_str())) << "f" << RESET << std::endl;
+			std::cout << MAGENTA << "Double: " << std::atof(input.c_str()) << RESET << std::endl;
+		}
 		break;
+	}
 	default:
 		break;
 	}
-		
-		if (std::isalpha(std::stoi(input)))
-			std::cout << MAGENTA << static_cast<char>(std::stoi(input)) << std::endl;
-		else if (std::stoi(input) >= 0 && std::stoi(input) <= 255)
-			std::cout << MAGENTA << "Non displayable" << std::endl;
-		else
-			std::cout << MAGENTA << "Impossible" << std::endl;
-		
-
-	else
-		std::cout	<< MAGENTA
-					<< static_cast<char>(std::stoi(input)) << std::endl
-					<< static_cast<int>(std::stoi(input)) << std::endl
-					<< input << "f" << std::endl
-					<< input << RESET << std::endl;
 	return ;
 
 
