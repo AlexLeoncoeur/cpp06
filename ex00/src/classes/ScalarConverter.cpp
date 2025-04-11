@@ -86,10 +86,13 @@ static bool isDouble(const std::string input)
 
 converterDataType	getIndex(const std::string input)
 {
-	if (input == "-inf" || input == "+inf" || input == "nan")
-		return (PSD);
+	if ((static_cast<long long>(std::atof(input.c_str())) > 0 && static_cast<int>(std::atoi(input.c_str())) < 0)
+		|| (static_cast<long long>(std::atof(input.c_str())) < 0 && static_cast<int>(std::atoi(input.c_str())) > 0))
+		return (OVERFLOW);
 	else if (input == "-inff" || input == "+inff" || input == "nanf")
-		return (PSF);
+		return (MSF);
+	else if (input == "-inf" || input == "+inf" || input == "nan")
+		return (MSD);
 	else if (input.size() == 1 && std::isalpha(input[0]))
 		return (CHAR);
 	else if (isInt(input))
@@ -117,7 +120,7 @@ void	ScalarConverter::convert(const std::string input)
 	}
 	case INT:
 	{
-		if (isprint(static_cast<char>(std::atoi(input.c_str()))))
+		if (std::atoi(input.c_str()) >= 0 && std::atoi(input.c_str()) <= 255 && isprint(static_cast<char>(std::atoi(input.c_str()))))
 			std::cout	<< MAGENTA << "Char: '" << static_cast<char>(std::atoi(input.c_str())) << "'" <<  std::endl;
 		else
 			std::cout	<< MAGENTA << "Char: Non displayable" << std::endl;
@@ -129,7 +132,8 @@ void	ScalarConverter::convert(const std::string input)
 	}
 	case FLOAT:
 	{
-		if (isprint(static_cast<char>(std::atof(input.c_str()))))
+		std::cout << std::fixed << std::setprecision(input.substr(input.find(".") + 1).size() - 1);
+		if (std::atoi(input.c_str()) >= 0 && std::atoi(input.c_str()) <= 255 && isprint(static_cast<char>(std::atof(input.c_str()))))
 			std::cout	<< MAGENTA << "Char: '" << static_cast<char>(std::atoi(input.c_str())) << "'" <<  std::endl;
 		else
 			std::cout	<< MAGENTA << "Char: Non displayable" << std::endl;
@@ -148,7 +152,8 @@ void	ScalarConverter::convert(const std::string input)
 	}
 	case DOUBLE:
 	{
-		if (isprint(static_cast<char>(std::atof(input.c_str()))))
+		std::cout << std::fixed << std::setprecision(input.substr(input.find(".") + 1).size());
+		if (std::atoi(input.c_str()) >= 0 && std::atoi(input.c_str()) <= 255 && isprint(static_cast<char>(std::atof(input.c_str()))))
 			std::cout	<< MAGENTA << "Char: '" << static_cast<char>(std::atoi(input.c_str())) << "'" <<  std::endl;
 		else
 			std::cout	<< MAGENTA << "Char: Non displayable" << std::endl;
@@ -165,8 +170,35 @@ void	ScalarConverter::convert(const std::string input)
 		}
 		break;
 	}
+	case MSF:
+	{
+		std::cout	<< MAGENTA << "Char: Impossible" << std::endl;
+		std::cout	<< MAGENTA << "Int: Impossible" << std::endl;
+		std::cout << MAGENTA << "Float: " << input << RESET << std::endl;
+		std::cout << MAGENTA << "Double: " << input.substr(0, input.find_last_of("f"))  << RESET << std::endl;
+		break ;
+	}
+	case MSD:
+	{
+		std::cout	<< MAGENTA << "Char: Impossible" << std::endl;
+		std::cout	<< MAGENTA << "Int: Impossible" << std::endl;
+		std::cout << MAGENTA << "Float: " << input << "f"  << RESET << std::endl;
+		std::cout << MAGENTA << "Double: " << input << RESET << std::endl;
+		break ;
+	}
+	case OVERFLOW:
+	{
+		std::cout	<< MAGENTA << "Char: Overflow" << std::endl;
+		std::cout	<< MAGENTA << "Int: Overflow" << std::endl;
+		std::cout << MAGENTA << "Float: Overflow" << RESET << std::endl;
+		std::cout << MAGENTA << "Double: Overflow" << RESET << std::endl;
+		break ;
+	}
 	default:
+	{
+		std::cout	<< RED << "error: invalid conversion" << RESET << std::endl;
 		break;
+	}
 	}
 	return ;
 
