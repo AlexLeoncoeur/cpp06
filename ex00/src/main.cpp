@@ -2,7 +2,7 @@
 
 int	main(void)
 {
-	ScalarConverter::convert(INT_MIN);
+	ScalarConverter::convert("202000000.5");
 
 	return (0);
 }

@@ -120,6 +120,7 @@ void	ScalarConverter::convert(const std::string input)
 	}
 	case INT:
 	{
+		std::cout << std::fixed << std::setprecision(0);
 		if (std::atoi(input.c_str()) >= 0 && std::atoi(input.c_str()) <= 255 && isprint(static_cast<char>(std::atoi(input.c_str()))))
 			std::cout	<< MAGENTA << "Char: '" << static_cast<char>(std::atoi(input.c_str())) << "'" <<  std::endl;
 		else
@@ -152,7 +153,6 @@ void	ScalarConverter::convert(const std::string input)
 	}
 	case DOUBLE:
 	{
-		std::cout << std::fixed << std::setprecision(input.substr(input.find(".") + 1).size());
 		if (std::atoi(input.c_str()) >= 0 && std::atoi(input.c_str()) <= 255 && isprint(static_cast<char>(std::atof(input.c_str()))))
 			std::cout	<< MAGENTA << "Char: '" << static_cast<char>(std::atoi(input.c_str())) << "'" <<  std::endl;
 		else
@@ -160,11 +160,13 @@ void	ScalarConverter::convert(const std::string input)
 		std::cout << MAGENTA << "Int: " << static_cast<int>(std::atof(input.c_str())) << std::endl;
 		if (std::atof(input.c_str()) == static_cast<int>(std::atof(input.c_str())))
 		{
-			std::cout << MAGENTA << "Float: " << static_cast<float>(std::atof(input.c_str())) << ".0f" << RESET << std::endl;
-			std::cout << MAGENTA << "Double: " << std::atof(input.c_str()) << ".0" << RESET << std::endl;
+			std::cout << std::fixed << std::setprecision(1);
+			std::cout << MAGENTA << "Float: " << static_cast<float>(std::atof(input.c_str())) << "f" << RESET << std::endl;
+			std::cout << MAGENTA << "Double: " << std::atof(input.c_str()) << RESET << std::endl;
 		}
 		else
 		{
+			std::cout << std::fixed << std::setprecision(input.substr(input.find(".") + 1).size());
 			std::cout << MAGENTA << "Float: " << static_cast<float>(std::atof(input.c_str())) << "f" << RESET << std::endl;
 			std::cout << MAGENTA << "Double: " << std::atof(input.c_str()) << RESET << std::endl;
 		}
