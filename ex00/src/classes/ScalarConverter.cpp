@@ -139,16 +139,16 @@ void	ScalarConverter::convert(const std::string input)
 			std::cout	<< MAGENTA << "Char: '" << static_cast<char>(std::atoi(input.c_str())) << "'" <<  std::endl;
 		else
 			std::cout	<< MAGENTA << "Char: Non displayable" << std::endl;
-		std::cout << MAGENTA << "Int: " << static_cast<int>(std::atof(input.c_str())) << std::endl;
-		if (std::atof(input.c_str()) == static_cast<int>(std::atof(input.c_str())))
+		std::cout << MAGENTA << "Int: " << std::atoi(input.c_str()) << std::endl;
+		if (std::atof(input.c_str()) == std::atoi(input.c_str()))
 		{
-			std::cout << MAGENTA << "Float: " << std::atof(input.c_str()) << "f" << RESET << std::endl;
-			std::cout << MAGENTA << "Double: " << static_cast<double>(std::atof(input.c_str())) << RESET << std::endl;
+			std::cout << MAGENTA << "Float: " << static_cast<float>(std::atof(input.c_str())) << "f" << RESET << std::endl;
+			std::cout << MAGENTA << "Double: " << std::atof(input.c_str()) << RESET << std::endl;
 		}
 		else
 		{
-			std::cout << MAGENTA << "Float: " << std::atof(input.c_str()) << "f" << RESET << std::endl;
-			std::cout << MAGENTA << "Double: " << static_cast<double>(std::atof(input.c_str())) << RESET << std::endl;
+			std::cout << MAGENTA << "Float: " << static_cast<float>(std::atof(input.c_str())) << "f" << RESET << std::endl;
+			std::cout << MAGENTA << "Double: " << std::atof(input.c_str()) << RESET << std::endl;
 		}
 		break;
 	}
@@ -158,18 +158,18 @@ void	ScalarConverter::convert(const std::string input)
 			std::cout	<< YELLOW << "Char: '" << static_cast<char>(std::atoi(input.c_str())) << "'" <<  std::endl;
 		else
 			std::cout	<< YELLOW << "Char: Non displayable" << std::endl;
-		std::cout << YELLOW << "Int: " << static_cast<int>(std::atof(input.c_str())) << std::endl;
-		if (std::atof(input.c_str()) == static_cast<int>(std::atof(input.c_str())))
+		std::cout << YELLOW << "Int: " << std::atoi(input.c_str()) << std::endl;
+		if (std::atof(input.c_str()) == std::atoi(input.c_str()))
 		{
 			std::cout << std::fixed << std::setprecision(1);
 			std::cout << YELLOW << "Float: " << static_cast<float>(std::atof(input.c_str())) << "f" << RESET << std::endl;
-			std::cout << YELLOW << "Double: " << (std::atof(input.c_str())) << RESET << std::endl;
+			std::cout << YELLOW << "Double: " << std::atof(input.c_str()) << RESET << std::endl;
 		}
 		else
 		{
 			std::cout << std::fixed << std::setprecision(input.substr(input.find(".") + 1).size());
 			std::cout << YELLOW << "Float: " << static_cast<float>(std::atof(input.c_str())) << "f" << RESET << std::endl;
-			std::cout << YELLOW << "Double: " << (std::atof(input.c_str())) << RESET << std::endl;
+			std::cout << YELLOW << "Double: " << std::atof(input.c_str()) << RESET << std::endl;
 		}
 		break;
 	}
