@@ -86,14 +86,15 @@ static bool isDouble(const std::string input)
 
 converterDataType	getIndex(const std::string input)
 {
-	if ((static_cast<long long>(std::atof(input.c_str())) > 0 && static_cast<int>(std::atoi(input.c_str())) < 0)
-		|| (static_cast<long long>(std::atof(input.c_str())) < 0 && static_cast<int>(std::atoi(input.c_str())) > 0))
+	if ((std::atoll(input.c_str()) > INT_MAX)
+		|| std::atoll(input.c_str()) < INT_MIN)
 		return (OVERFLOW);
 	else if (input == "-inff" || input == "+inff" || input == "nanf")
 		return (MSF);
 	else if (input == "-inf" || input == "+inf" || input == "nan")
 		return (MSD);
-	else if (input.size() == 1 && std::isalpha(input[0]))
+	else if (input.size() == 1 && (std::atoi(input.c_str()) >= 0 && std::atoi(input.c_str()) <= 255)
+		&& ((input[0] >= 32 && input[0] < 48) || (input[0] >= 58 && input[0] <= 126)))
 		return (CHAR);
 	else if (isInt(input))
 		return (INT);
@@ -111,7 +112,7 @@ void	ScalarConverter::convert(const std::string input)
 	{
 	case CHAR:
 	{
-		std::cout	<< MAGENTA
+		std::cout	<< GREEN
 					<< "Char: '" << input << "'" << std::endl
 					<< "Int: " << static_cast<int>(input[0]) << std::endl
 					<< "Float: " << static_cast<float>(input[0]) << ".0f" << std::endl
@@ -120,15 +121,15 @@ void	ScalarConverter::convert(const std::string input)
 	}
 	case INT:
 	{
-		std::cout << std::fixed << std::setprecision(0);
+		std::cout << std::fixed << std::setprecision(1);
 		if (std::atoi(input.c_str()) >= 0 && std::atoi(input.c_str()) <= 255 && isprint(static_cast<char>(std::atoi(input.c_str()))))
-			std::cout	<< MAGENTA << "Char: '" << static_cast<char>(std::atoi(input.c_str())) << "'" <<  std::endl;
+			std::cout	<< BLUE << "Char: '" << static_cast<char>(std::atoi(input.c_str())) << "'" <<  std::endl;
 		else
-			std::cout	<< MAGENTA << "Char: Non displayable" << std::endl;
-		std::cout	<< MAGENTA
+			std::cout	<< BLUE << "Char: Non displayable" << std::endl;
+		std::cout	<< BLUE
 					<< "Int: " << std::atoi(input.c_str()) << std::endl
-					<< "Float: " << static_cast<float>(std::atoi(input.c_str())) << ".0f" << std::endl
-					<< "Double: " << static_cast<double>(std::atoi(input.c_str())) << ".0" << RESET << std::endl;
+					<< "Float: " << static_cast<float>(std::atof(input.c_str())) << "f" << std::endl
+					<< "Double: " << static_cast<double>(std::atof(input.c_str())) << RESET << std::endl;
 		break;
 	}
 	case FLOAT:
@@ -141,8 +142,8 @@ void	ScalarConverter::convert(const std::string input)
 		std::cout << MAGENTA << "Int: " << static_cast<int>(std::atof(input.c_str())) << std::endl;
 		if (std::atof(input.c_str()) == static_cast<int>(std::atof(input.c_str())))
 		{
-			std::cout << MAGENTA << "Float: " << std::atof(input.c_str()) << ".0f" << RESET << std::endl;
-			std::cout << MAGENTA << "Double: " << static_cast<double>(std::atof(input.c_str())) << ".0" << RESET << std::endl;
+			std::cout << MAGENTA << "Float: " << std::atof(input.c_str()) << "f" << RESET << std::endl;
+			std::cout << MAGENTA << "Double: " << static_cast<double>(std::atof(input.c_str())) << RESET << std::endl;
 		}
 		else
 		{
@@ -154,21 +155,21 @@ void	ScalarConverter::convert(const std::string input)
 	case DOUBLE:
 	{
 		if (std::atoi(input.c_str()) >= 0 && std::atoi(input.c_str()) <= 255 && isprint(static_cast<char>(std::atof(input.c_str()))))
-			std::cout	<< MAGENTA << "Char: '" << static_cast<char>(std::atoi(input.c_str())) << "'" <<  std::endl;
+			std::cout	<< YELLOW << "Char: '" << static_cast<char>(std::atoi(input.c_str())) << "'" <<  std::endl;
 		else
-			std::cout	<< MAGENTA << "Char: Non displayable" << std::endl;
-		std::cout << MAGENTA << "Int: " << static_cast<int>(std::atof(input.c_str())) << std::endl;
+			std::cout	<< YELLOW << "Char: Non displayable" << std::endl;
+		std::cout << YELLOW << "Int: " << static_cast<int>(std::atof(input.c_str())) << std::endl;
 		if (std::atof(input.c_str()) == static_cast<int>(std::atof(input.c_str())))
 		{
 			std::cout << std::fixed << std::setprecision(1);
-			std::cout << MAGENTA << "Float: " << static_cast<float>(std::atof(input.c_str())) << "f" << RESET << std::endl;
-			std::cout << MAGENTA << "Double: " << std::atof(input.c_str()) << RESET << std::endl;
+			std::cout << YELLOW << "Float: " << static_cast<float>(std::atof(input.c_str())) << "f" << RESET << std::endl;
+			std::cout << YELLOW << "Double: " << (std::atof(input.c_str())) << RESET << std::endl;
 		}
 		else
 		{
 			std::cout << std::fixed << std::setprecision(input.substr(input.find(".") + 1).size());
-			std::cout << MAGENTA << "Float: " << static_cast<float>(std::atof(input.c_str())) << "f" << RESET << std::endl;
-			std::cout << MAGENTA << "Double: " << std::atof(input.c_str()) << RESET << std::endl;
+			std::cout << YELLOW << "Float: " << static_cast<float>(std::atof(input.c_str())) << "f" << RESET << std::endl;
+			std::cout << YELLOW << "Double: " << (std::atof(input.c_str())) << RESET << std::endl;
 		}
 		break;
 	}
@@ -206,8 +207,3 @@ void	ScalarConverter::convert(const std::string input)
 
 
 }
-
-/* hacer caso de recibir float y double y encargarse de manejar los tamaños o si no
-esta en el ascii
--Capar para que no entren varias letras
--Tamaño máximo de cada variable*/
