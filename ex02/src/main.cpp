@@ -23,20 +23,21 @@ Base *generate(void)
 			return (new C);
 		default:
 			std::cout << "Error: cannot create class" << std::endl;
-			return (NULL);
+			return (nullptr);
 	}
 }
 
 void	identify(Base *p)
 {
-	if (p == nullptr)
-		std::cout	<< "Cannot identify class" << std::endl;
-	else if (p == dynamic_cast<A*>(p))
+	
+	if (p == dynamic_cast<A*>(p))
 		std::cout	<< "This is an A class" << std::endl;
 	else if (p == dynamic_cast<B*>(p))
 		std::cout	<< "This is an B class" << std::endl;
 	else if (p == dynamic_cast<C*>(p))
 		std::cout	<< "This is an C class" << std::endl;
+	else
+		std::cout	<< "Cannot identify class" << std::endl;
 }
 
 void	identify(Base &p)
